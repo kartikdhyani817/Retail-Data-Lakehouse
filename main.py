@@ -1,5 +1,6 @@
 from scripts.ingest import load_raw_data
 from scripts.bronze import save_bronze
+from scripts.silver import create_silver_layer
 
 
 def main():
@@ -10,12 +11,14 @@ def main():
 
     df = load_raw_data()
 
-    print("\nRows :", len(df))
-    print("Columns :", len(df.columns))
-
     save_bronze(df)
 
-    print("\nDay 2 completed successfully.")
+    silver_df = create_silver_layer()
+
+    print("\nSilver Layer Shape")
+    print(silver_df.shape)
+
+    print("\nDay 3 completed successfully.")
 
 
 if __name__ == "__main__":
