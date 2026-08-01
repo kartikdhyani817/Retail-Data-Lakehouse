@@ -1,6 +1,7 @@
 from scripts.ingest import load_raw_data
 from scripts.bronze import save_bronze
 from scripts.silver import create_silver_layer
+from scripts.gold import create_gold_layer
 
 
 def main():
@@ -9,16 +10,15 @@ def main():
     print("Retail Data Lakehouse")
     print("=" * 50)
 
-    df = load_raw_data()
+    raw_df = load_raw_data()
 
-    save_bronze(df)
+    save_bronze(raw_df)
 
-    silver_df = create_silver_layer()
+    create_silver_layer()
 
-    print("\nSilver Layer Shape")
-    print(silver_df.shape)
+    create_gold_layer()
 
-    print("\nDay 3 completed successfully.")
+    print("\nDay 4 completed successfully.")
 
 
 if __name__ == "__main__":
