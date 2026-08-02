@@ -2,6 +2,8 @@ from scripts.ingest import load_raw_data
 from scripts.bronze import save_bronze
 from scripts.silver import create_silver_layer
 from scripts.gold import create_gold_layer
+from scripts.analytics import run_analytics
+from scripts.report import generate_report
 
 
 def main():
@@ -18,7 +20,11 @@ def main():
 
     create_gold_layer()
 
-    print("\nDay 4 completed successfully.")
+    connection = run_analytics()
+
+    generate_report(connection)
+
+    print("\nDay 5 completed successfully.")
 
 
 if __name__ == "__main__":
