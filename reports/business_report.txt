@@ -1,0 +1,32 @@
+==================================================
+Retail Data Lakehouse Report
+==================================================
+
+Top Categories
+----------------------
+       category  total_sales  total_profit  total_quantity
+     Technology  836154.0330   145454.9481            6939
+      Furniture  741306.3133    18421.8137            8020
+Office Supplies  718735.2440   122364.6608           22861
+
+Region Performance
+----------------------
+ region  total_sales  total_profit  total_quantity
+   West  725255.6365   108329.8079           12234
+   East  678435.1960    91506.3092           10609
+Central  500782.8528    39655.8752            8768
+  South  391721.9050    46749.4303            6209
+
+Top Cities
+----------------------
+         city  total_sales  total_profit  total_quantity
+New York City  256319.0410    62013.8973            3413
+  Los Angeles  175831.9010    30431.4267            2876
+      Seattle  119460.2820    29121.6825            1578
+San Francisco  112577.1720    17466.1186            1920
+ Philadelphia  109061.4610   -13843.2106            1978
+      Houston   64441.2564   -10175.1755            1460
+      Chicago   48535.9770    -6648.3318            1129
+    San Diego   47521.0290     6377.1960             670
+ Jacksonville   44713.1830    -2323.8350             429
+  Springfield   43054.3420     6200.6974             649
