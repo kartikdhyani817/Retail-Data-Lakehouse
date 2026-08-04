@@ -372,3 +372,31 @@ elif page == "Business Report":
         mime="text/plain",
         use_container_width=True,
     )
+
+elif page == "Data Quality":
+
+    st.subheader("Data Quality Report")
+
+    report_file = Path(
+        "reports/data_quality_report.txt"
+    )
+
+    if report_file.exists():
+
+        report = report_file.read_text(
+            encoding="utf-8"
+        )
+
+        st.text(report)
+
+        st.download_button(
+            "Download Report",
+            report,
+            "data_quality_report.txt"
+        )
+
+    else:
+
+        st.warning(
+            "Run the pipeline first."
+        )
