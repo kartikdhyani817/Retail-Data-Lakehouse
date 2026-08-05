@@ -1,50 +1,156 @@
-import pandas as pd
 from pathlib import Path
 
+import pandas as pd
 
-BRONZE_FILE = Path("data/bronze/bronze_sales.parquet")
+
+BRONZE_FILE = Path(
+    "data/bronze/bronze_sales.parquet"
+)
+
+SILVER_FOLDER = Path(
+    "data/silver"
+)
+
+SILVER_FILE = (
+    SILVER_FOLDER / "silver_sales.parquet"
+)
 
 
-def create_silver_layer():
+def standardize_column_names(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
 
-    df = pd.read_parquet(BRONZE_FILE)
+    standardized_df = df.copy()
 
-    print("\nCleaning data...")
-
-    # Remove duplicate rows
-    duplicates = df.duplicated().sum()
-    df = df.drop_duplicates()
-
-    # Standardize column names
-    df.columns = (
-        df.columns.str.strip()
-                  .str.lower()
-                  .str.replace(" ", "_")
+    standardized_df.columns = (
+        standardized_df.columns
+        .str.strip()
+        .str.lower()
+        .str.replace(
+            " ",
+            "_",
+            regex=False,
+        )
+        .str.replace(
+            "-",
+            "_",
+            regex=False,
+        )
     )
 
-    # Fill missing values
+    return standardized_df
+
+
+def create_silver_layer() -> pd.DataFrame:
+
+    if not BRONZE_FILE.exists():
+        raise FileNotFoundError(
+            f"Bronze file not found: {BRONZE_FILE}"
+        )
+
+    df = pd.read_parquet(
+        BRONZE_FILE
+    )
+
+    print("\nCreating Silver layer...")
+
+    initial_rows = len(df)
+
+    df = standardize_column_names(df)
+
+    # Use the generated hash for reliable deduplication
+    if "record_hash" in df.columns:
+        df = df.drop_duplicates(
+            subset=["record_hash"],
+            keep="first",
+        )
+    else:
+        df = df.drop_duplicates()
+
+    duplicates_removed = (
+        initial_rows - len(df)
+    )
+
+    text_columns = [
+        "ship_mode",
+        "segment",
+        "country",
+        "city",
+        "state",
+        "region",
+        "category",
+        "sub_category",
+    ]
+
+    for column in text_columns:
+        if column in df.columns:
+            df[column] = (
+                df[column]
+                .fillna("Unknown")
+                .astype(str)
+                .str.strip()
+            )
+
     if "postal_code" in df.columns:
-        df["postal_code"] = df["postal_code"].fillna(0)
+        df["postal_code"] = (
+            pd.to_numeric(
+                df["postal_code"],
+                errors="coerce",
+            )
+            .fillna(0)
+            .astype(int)
+        )
 
-    if "ship_mode" in df.columns:
-        df["ship_mode"] = df["ship_mode"].fillna("Unknown")
+    numeric_columns = [
+        "sales",
+        "quantity",
+        "discount",
+        "profit",
+    ]
 
-    # Convert dates
-    if "order_date" in df.columns:
-        df["order_date"] = pd.to_datetime(df["order_date"])
+    for column in numeric_columns:
+        if column in df.columns:
+            df[column] = pd.to_numeric(
+                df[column],
+                errors="coerce",
+            )
 
-    if "ship_date" in df.columns:
-        df["ship_date"] = pd.to_datetime(df["ship_date"])
+    required_numeric_columns = [
+        column
+        for column in [
+            "sales",
+            "quantity",
+            "profit",
+        ]
+        if column in df.columns
+    ]
 
-    silver_folder = Path("data/silver")
-    silver_folder.mkdir(parents=True, exist_ok=True)
+    if required_numeric_columns:
+        df = df.dropna(
+            subset=required_numeric_columns
+        )
 
-    output_file = silver_folder / "silver_sales.parquet"
+    SILVER_FOLDER.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
 
-    df.to_parquet(output_file, index=False)
+    df.to_parquet(
+        SILVER_FILE,
+        index=False,
+    )
 
-    print(f"Duplicates Removed : {duplicates}")
-    print(f"Final Rows : {len(df)}")
-    print("Silver layer created successfully.")
+    print(
+        f"Duplicates removed: "
+        f"{duplicates_removed}"
+    )
+
+    print(
+        f"Silver rows: {len(df)}"
+    )
+
+    print(
+        "Silver layer created successfully."
+    )
 
     return df

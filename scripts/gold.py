@@ -75,25 +75,20 @@ def create_gold_layer():
     # --------------------------------------------------
 
     subcategory_sales = (
-        df.groupby(
-            "sub-category",
-            as_index=False
-        )
-        .agg(
-            total_sales=("sales", "sum"),
-            total_profit=("profit", "sum"),
-            total_quantity=("quantity", "sum")
-        )
-        .sort_values(
-            "total_sales",
-            ascending=False
-        )
+    df.groupby(
+        "sub_category",
+        as_index=False,
     )
-
-    subcategory_sales.to_parquet(
-        gold_folder / "sales_by_subcategory.parquet",
-        index=False
+    .agg(
+        total_sales=("sales", "sum"),
+        total_profit=("profit", "sum"),
+        total_quantity=("quantity", "sum"),
     )
+    .sort_values(
+        "total_sales",
+        ascending=False,
+    )
+)
 
     # --------------------------------------------------
     # Top Cities
