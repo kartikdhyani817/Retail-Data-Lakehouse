@@ -400,3 +400,44 @@ elif page == "Data Quality":
         st.warning(
             "Run the pipeline first."
         )
+
+
+
+
+elif page == "Incremental Loading":
+
+    st.subheader(
+        "Incremental Loading Report"
+    )
+
+    incremental_report_file = Path(
+        "reports/incremental_load_report.txt"
+    )
+
+    if incremental_report_file.exists():
+
+        incremental_report_text = (
+            incremental_report_file.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        st.text(
+            incremental_report_text
+        )
+
+        st.download_button(
+            label="Download Incremental Report",
+            data=incremental_report_text,
+            file_name=(
+                "incremental_load_report.txt"
+            ),
+            mime="text/plain",
+            use_container_width=True,
+        )
+
+    else:
+
+        st.warning(
+            "Run `python main.py` first."
+        )        
