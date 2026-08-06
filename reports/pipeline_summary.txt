@@ -1,0 +1,19 @@
+============================================================
+RETAIL DATA LAKEHOUSE PIPELINE SUMMARY
+============================================================
+
+Pipeline Run: 2026-08-06 16:41:07
+Status: SUCCESS
+Total Execution Time: 3.48 seconds
+
+STAGE EXECUTION TIMES
+------------------------------------------------------------
+Raw Data Ingestion: 0.19 seconds
+Data Quality Validation: 0.03 seconds
+Data Quality Report Generation: 0.01 seconds
+Incremental Bronze Loading: 2.46 seconds
+Incremental Report Generation: 0.00 seconds
+Silver Layer Transformation: 0.16 seconds
+Gold Layer Aggregation: 0.32 seconds
+DuckDB Analytics Setup: 0.23 seconds
+Business Report Generation: 0.06 seconds

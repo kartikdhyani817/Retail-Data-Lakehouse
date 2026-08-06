@@ -1,0 +1,11 @@
+============================================================
+INCREMENTAL LOAD REPORT
+============================================================
+
+Pipeline Run: 2026-08-06 16:41:06
+
+Incoming Rows: 9995
+Source Duplicates: 17
+Existing Bronze Rows: 9978
+New Rows Loaded: 0
+Final Bronze Rows: 9978
