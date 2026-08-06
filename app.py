@@ -441,3 +441,37 @@ elif page == "Incremental Loading":
         st.warning(
             "Run `python main.py` first."
         )        
+
+elif page == "Pipeline Logs":
+
+    st.subheader(
+        "Pipeline Logs"
+    )
+
+    log_file = Path(
+        "logs/pipeline.log"
+    )
+
+    if log_file.exists():
+
+        logs = log_file.read_text(
+            encoding="utf-8"
+        )
+
+        st.text_area(
+            "Logs",
+            logs,
+            height=500
+        )
+
+        st.download_button(
+            "Download Logs",
+            logs,
+            "pipeline.log"
+        )
+
+    else:
+
+        st.warning(
+            "No log file available."
+        )
