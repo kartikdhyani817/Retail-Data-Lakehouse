@@ -2,7 +2,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Callable
+from config import create_project_directories
 
+from scripts.performance import (
+    generate_performance_report,
+)
 from scripts.analytics import run_analytics
 from scripts.bronze import save_bronze
 from scripts.data_quality import validate_data
@@ -149,9 +153,8 @@ def print_incremental_summary(
 
 
 def main() -> None:
-    """
-    Execute the complete Retail Data Lakehouse pipeline.
-    """
+    
+    create_project_directories()
 
     pipeline_start_time = time.perf_counter()
 
@@ -306,6 +309,10 @@ def main() -> None:
         total_execution_time = round(
             time.perf_counter() - pipeline_start_time,
             2,
+        )
+        generate_performance_report(
+            stage_times,
+            total_execution_time,
         )
 
         save_pipeline_summary(

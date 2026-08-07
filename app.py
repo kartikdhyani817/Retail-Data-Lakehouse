@@ -475,3 +475,44 @@ elif page == "Pipeline Logs":
         st.warning(
             "No log file available."
         )
+
+
+elif page == "Performance":
+
+    st.subheader(
+        "⚡ Pipeline Performance"
+    )
+
+    performance_file = Path(
+        "reports/performance_report.txt"
+    )
+
+    if performance_file.exists():
+
+        performance_report = (
+            performance_file.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        st.text_area(
+            "Latest Pipeline Performance",
+            performance_report,
+            height=500,
+            disabled=True,
+        )
+
+        st.download_button(
+            label="Download Performance Report",
+            data=performance_report,
+            file_name="performance_report.txt",
+            mime="text/plain",
+            use_container_width=True,
+        )
+
+    else:
+
+        st.warning(
+            "No performance report available. "
+            "Run `python main.py` first."
+        )
