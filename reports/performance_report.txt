@@ -1,0 +1,49 @@
+============================================================
+RETAIL DATA LAKEHOUSE PERFORMANCE REPORT
+============================================================
+
+Generated: 2026-08-07 13:45:38
+
+Total Pipeline Time: 3.2800 seconds
+
+STAGE PERFORMANCE
+------------------------------------------------------------
+Raw Data Ingestion
+  Time       : 0.1700 seconds
+  Percentage : 5.18%
+
+Data Quality Validation
+  Time       : 0.0400 seconds
+  Percentage : 1.22%
+
+Data Quality Report Generation
+  Time       : 0.0000 seconds
+  Percentage : 0.00%
+
+Incremental Bronze Loading
+  Time       : 2.3000 seconds
+  Percentage : 70.12%
+
+Incremental Report Generation
+  Time       : 0.0100 seconds
+  Percentage : 0.30%
+
+Silver Layer Transformation
+  Time       : 0.2500 seconds
+  Percentage : 7.62%
+
+Gold Layer Aggregation
+  Time       : 0.2400 seconds
+  Percentage : 7.32%
+
+DuckDB Analytics Setup
+  Time       : 0.1900 seconds
+  Percentage : 5.79%
+
+Business Report Generation
+  Time       : 0.0500 seconds
+  Percentage : 1.52%
+
+------------------------------------------------------------
+Slowest Stage: Incremental Bronze Loading
+Slowest Stage Time: 2.3000 seconds
