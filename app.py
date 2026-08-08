@@ -516,3 +516,35 @@ elif page == "Performance":
             "No performance report available. "
             "Run `python main.py` first."
         )
+
+elif page == "Test Results":
+
+    st.subheader(
+        "🧪 Automated Test Results"
+    )
+
+    test_report_file = Path(
+        "reports/test_report.txt"
+    )
+
+    if test_report_file.exists():
+
+        test_results = (
+            test_report_file.read_text(
+                encoding="utf-8"
+            )
+        )
+
+        st.text_area(
+            "Latest Pytest Results",
+            test_results,
+            height=500,
+            disabled=True,
+        )
+
+    else:
+
+        st.info(
+            "Run pytest to generate "
+            "the test report."
+        )
