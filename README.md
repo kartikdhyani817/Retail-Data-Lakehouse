@@ -1,6 +1,5 @@
 # 🏗️ Retail Data Lakehouse
-
-A hands-on end-to-end **Data Engineering project** where I built a retail data pipeline from raw CSV files to analytics-ready datasets and an interactive dashboard.
+hands-on end-to-end **Data Engineering project** where I built a retail data pipeline from raw CSV files to analytics-ready datasets and an interactive dashboard.
 
 The main idea behind this project was to understand how data moves through a real pipeline — from ingestion and cleaning to transformation, storage, SQL analytics, monitoring, and reporting. Instead of keeping everything in one script, I gradually structured the project into different layers and reusable components.
 
